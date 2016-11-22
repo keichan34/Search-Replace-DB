@@ -5,10 +5,11 @@ LABEL Description="Search Replace DB tool Docker image" \
 	Usage="docker run -i -t --rm -p 8080:80 --link mysql-container:mysql fauria/srdb" \
 	Version="1.0"
 
-RUN apt-get update
-RUN apt-get upgrade -y
-
-RUN apt-get install -y php5 php5-mysql apache2 libapache2-mod-php5 wget unzip
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y php php-mysql php-mbstring apache2 libapache2-mod-php wget unzip && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN wget https://github.com/interconnectit/Search-Replace-DB/archive/master.zip -P /var/www
 RUN rm -rf /var/www/html
